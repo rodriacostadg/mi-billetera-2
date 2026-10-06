@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS wallet_state (
-  sync_id TEXT PRIMARY KEY,
+  user_email TEXT PRIMARY KEY,
   payload TEXT NOT NULL,
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
