@@ -5,8 +5,22 @@ const $=s=>document.querySelector(s), money=n=>new Intl.NumberFormat('es-AR',{st
 const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
 const today=new Date(); $('#today').textContent=today.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();
 function display(n){return data.hide?'••••••':money(n)}
+function walletIcon(name){
+  const icons={
+    'Efectivo':'<span class="wallet-emoji">💵</span>',
+    'Mercado Pago':'<span class="brand-logo mp">🤝</span>',
+    'Naranja X':'<span class="brand-logo nx">NX</span>',
+    'Cocos TNA':'<span class="brand-logo cocos">↪</span>',
+    'Cocos Pesos Plus':'<span class="brand-logo cocos">↪</span>',
+    'Personal Pay':'<span class="brand-logo personal">✓</span>',
+    'Banco de Corrientes':'<span class="brand-logo banco">♞</span>',
+    'ARQ':'<span class="brand-logo arq">ARQ<small>USD</small></span>',
+    'Dólares':'<span class="wallet-emoji">💸</span>'
+  };
+  return icons[name]||`<span class="brand-logo generic">${name.slice(0,2).toUpperCase()}</span>`;
+}
 function render(){const total=data.wallets.reduce((a,w)=>a+Number(w.balance),0);$('#capitalTotal').textContent=display(total);$('#capitalHint').textContent=data.hide?'Capital oculto':'Disponible entre tus billeteras';$('#toggleCapital').textContent=data.hide?'◌':'◉';
-$('#wallets').innerHTML=data.wallets.map(w=>`<article class="wallet"><b class="wallet-mark">${w.icon}</b><div class="wallet-info"><strong>${w.name}</strong><span>${w.name.includes('MP')?'Rendimiento diario disponible':''}</span></div><strong>${display(w.balance)}</strong><button data-edit-wallet="${w.id}" aria-label="Editar saldo">✎</button></article>`).join('');
+$('#wallets').innerHTML=data.wallets.map(w=>`<article class="wallet"><b class="wallet-mark">${walletIcon(w.name)}</b><div class="wallet-info"><strong>${w.name}</strong><span>${w.name.includes('MP')?'Rendimiento diario disponible':''}</span></div><strong>${display(w.balance)}</strong><button data-edit-wallet="${w.id}" aria-label="Editar saldo">✎</button></article>`).join('');
 const search=$('#movementSearch')?.value?.toLowerCase()||''; const ms=data.movements.filter(m=>m.name.toLowerCase().includes(search)).sort((a,b)=>new Date(b.date)-new Date(a.date));$('#movements').innerHTML=ms.length?ms.map(m=>`<article class="movement ${m.type}"><b class="movement-icon">${m.type==='in'?'↙':'↗'}</b><div class="movement-info"><p>${m.name}</p><small>${new Date(m.date+'T12:00').toLocaleDateString('es-AR')} · ${m.wallet}</small></div><strong>${m.type==='in'?'+':'-'}${display(m.amount)}</strong></article>`).join(''):'<p class="eyebrow">Todavía no registraste movimientos.</p>';
 const start=new Date();start.setHours(0,0,0,0);const week=new Date(start);week.setDate(week.getDate()-6);const spent=(from)=>data.movements.filter(m=>m.type==='out'&&new Date(m.date+'T12:00')>=from).reduce((a,m)=>a+Number(m.amount),0);$('#todaySpent').textContent=display(spent(start));$('#weekSpent').textContent=display(spent(week));
 $('#bills').innerHTML=data.bills.length?data.bills.map(b=>`<article class="card-item"><div><section><h3>${b.name}</h3><span>Vence el ${b.day} de cada mes</span></section><strong class="${b.paid?'paid':'pending'}">${b.paid?'Pagado':display(b.amount)}</strong></div></article>`).join(''):'<p class="eyebrow">Sin pagos mensuales cargados.</p>';
