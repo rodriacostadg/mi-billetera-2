@@ -1,5 +1,5 @@
 const KEY='mi-billetera-2-v1';
-const defaults={hide:false,wallets:[{id:1,name:'Efectivo',balance:0,icon:'$'},{id:2,name:'Mercado Pago',balance:0,icon:'MP'},{id:3,name:'Naranja X',balance:0,icon:'NX'},{id:4,name:'Banco de Corrientes',balance:0,icon:'BC'}],movements:[],bills:[],cards:[]};
+const defaults={hide:false,wallets:[{id:1,name:'Efectivo',balance:0,icon:'$'},{id:2,name:'Mercado Pago',balance:0,icon:'MP'},{id:3,name:'Naranja X',balance:0,icon:'NX'},{id:4,name:'Cocos TNA',balance:0,icon:'CT'},{id:5,name:'Cocos Pesos Plus',balance:0,icon:'CP'},{id:6,name:'Personal Pay',balance:0,icon:'PP'},{id:7,name:'Banco de Corrientes',balance:0,icon:'BC'},{id:8,name:'ARQ',balance:0,icon:'AR'},{id:9,name:'Dólares',balance:0,icon:'US'}],movements:[],bills:[],cards:[]};
 let data=JSON.parse(localStorage.getItem(KEY)||'null')||defaults;
 const $=s=>document.querySelector(s), money=n=>new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(Math.abs(Number(n)||0));
 const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
