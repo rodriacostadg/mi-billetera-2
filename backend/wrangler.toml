@@ -1,0 +1,8 @@
+name = "mi-billetera-2-sync"
+main = "worker.js"
+compatibility_date = "2026-10-06"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mi-billetera-2"
+database_id = "REEMPLAZAR_CON_ID_DE_D1"
