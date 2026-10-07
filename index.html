@@ -27,7 +27,8 @@
   </section>
   <section id="mensual" class="view">
     <div class="view-head"><div><p class="eyebrow">SERVICIOS Y SUSCRIPCIONES</p><h2>Mensual</h2></div><button class="primary small" data-a="b">+ Nuevo</button></div>
-    <div id="billStats" class="stats"></div><div id="bills" class="card-list"></div>
+    <div id="billStats" class="stats"></div>
+    <div class="monthly-tools" aria-label="Controles de pagos mensuales"><div class="month-switcher"><button type="button" class="month-arrow" data-a="bill-prev" aria-label="Mes anterior">‹</button><strong id="billMonthLabel"></strong><button type="button" class="month-arrow" data-a="bill-next" aria-label="Mes siguiente">›</button></div><div class="bill-filters"><input id="billSearch" type="search" placeholder="Buscar pagos del mes…" aria-label="Buscar pagos del mes"><select id="billSort" aria-label="Ordenar pagos"><option value="date">Fecha de pago</option><option value="amount">Mayor importe</option></select></div></div><div id="bills" class="card-list"></div>
   </section>
   <section id="tarjetas" class="view">
     <div class="view-head"><div><p class="eyebrow">CRÉDITOS Y CUOTAS</p><h2>Tarjetas</h2></div><button class="primary small" data-a="c">+ Agregar</button></div>
@@ -42,5 +43,5 @@
 </main>
 <nav class="bottom-nav" aria-label="Navegación principal"><button class="nav active" data-nav="home" aria-label="Inicio"><img class="nav-icon" src="assets/modules/HOME.svg" alt=""></button><button class="nav" data-nav="diario" aria-label="Movimientos"><img class="nav-icon" src="assets/modules/MOVIMIENTOS.svg" alt=""></button><button class="nav" data-nav="mensual" aria-label="Mensual"><img class="nav-icon" src="assets/modules/MENSUALES.svg" alt=""></button><button class="nav" data-nav="tarjetas" aria-label="Tarjetas"><img class="nav-icon" src="assets/modules/TARJETAS.svg" alt=""></button><button class="nav" data-nav="resumen" aria-label="Resumen"><img class="nav-icon" src="assets/modules/RESUMEN.svg" alt=""></button></nav>
 <dialog id="modal"><form id="modalForm"><div id="modalContent"></div></form></dialog>
-<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=16"></script><script>document.addEventListener('click',e=>{let row=e.target.closest('.wallet,.movement,.bill-item');if(!row||e.target.closest('button'))return;let id=row.classList.contains('bill-item')?row.dataset.billId:row.querySelector('[data-id]')?.dataset.id;let byId=x=>String(x.id)===String(id);if(row.classList.contains('wallet'))modal('w',d.wallets.find(byId));if(row.classList.contains('movement'))modal('m',d.movements.find(byId));if(row.classList.contains('bill-item'))modal('b',d.bills.find(byId))})</script>
+<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=17"></script><script>document.addEventListener('click',e=>{let row=e.target.closest('.wallet,.movement,.bill-item');if(!row||e.target.closest('button'))return;let id=row.classList.contains('bill-item')?row.dataset.billId:row.querySelector('[data-id]')?.dataset.id;let byId=x=>String(x.id)===String(id);if(row.classList.contains('wallet'))modal('w',d.wallets.find(byId));if(row.classList.contains('movement'))modal('m',d.movements.find(byId));if(row.classList.contains('bill-item'))modal('b',d.bills.find(byId))})</script>
 </body></html>
