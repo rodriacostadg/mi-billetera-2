@@ -1,8 +1,66 @@
 const KEY='mi-billetera-2-v1';
+const CLOUD_URL='https://mi-billetera-2-sync.rodriacostadg.workers.dev/state';
+const GOOGLE_CLIENT_ID='264539287566-sm1gq6j2e09vjejogrrpjopdcrd7atem.apps.googleusercontent.com';
 const defaults={hide:false,wallets:[{id:1,name:'Efectivo',balance:0,icon:'$'},{id:2,name:'Mercado Pago',balance:0,icon:'MP'},{id:3,name:'Naranja X',balance:0,icon:'NX'},{id:4,name:'Cocos TNA',balance:0,icon:'CT'},{id:5,name:'Cocos Pesos Plus',balance:0,icon:'CP'},{id:6,name:'Personal Pay',balance:0,icon:'PP'},{id:7,name:'Banco de Corrientes',balance:0,icon:'BC'},{id:8,name:'ARQ',balance:0,icon:'AR'},{id:9,name:'Dólares',balance:0,icon:'US'}],movements:[],bills:[],cards:[]};
 let data=JSON.parse(localStorage.getItem(KEY)||'null')||defaults;
+let googleToken='';
+let cloudActive=false;
+let syncTimer;
+let syncing=false;
 const $=s=>document.querySelector(s), money=n=>new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(Math.abs(Number(n)||0));
-const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(data));
+  if(cloudActive){
+    clearTimeout(syncTimer);
+    syncTimer=setTimeout(uploadCloud,450);
+  }
+}
+function setSyncStatus(text,state=''){
+  const status=$('#syncStatus');
+  if(status){status.textContent=text;status.dataset.state=state;}
+}
+async function cloudRequest(method,payload){
+  const response=await fetch(CLOUD_URL,{method,headers:{'Content-Type':'application/json','Authorization':`Bearer ${googleToken}`},body:payload?JSON.stringify(payload):undefined});
+  if(!response.ok)throw new Error('No se pudo conectar con la nube');
+  return response.json();
+}
+async function uploadCloud(){
+  if(!cloudActive||!googleToken||syncing)return;
+  try{
+    syncing=true;setSyncStatus('Guardando…','working');
+    await cloudRequest('PUT',{payload:JSON.stringify(data)});
+    setSyncStatus('Nube al día','ok');
+  }catch(error){setSyncStatus('Sin conexión','error');}
+  finally{syncing=false;}
+}
+async function handleGoogleCredential(response){
+  googleToken=response.credential;
+  try{
+    syncing=true;setSyncStatus('Conectando…','working');
+    const remote=await cloudRequest('GET');
+    const shouldUpload=!remote.payload;
+    if(remote.payload){
+      data=JSON.parse(remote.payload);
+      localStorage.setItem(KEY,JSON.stringify(data));
+    }
+    render();
+    cloudActive=true;
+    $('#googleSignIn').innerHTML='<span class="sync-live">☁ Nube</span>';
+    if(shouldUpload){
+      syncing=false;
+      await uploadCloud();
+      syncing=true;
+    }
+    setSyncStatus('Nube al día','ok');
+  }catch(error){
+    setSyncStatus('No se pudo sincronizar','error');
+  }finally{syncing=false;}
+}
+function initGoogle(){
+  if(!window.google?.accounts?.id){setTimeout(initGoogle,120);return;}
+  window.google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:handleGoogleCredential,auto_select:false,cancel_on_tap_outside:true});
+  window.google.accounts.id.renderButton($('#googleSignIn'),{theme:'outline',size:'medium',text:'signin_with',shape:'pill',width:160});
+}
 const today=new Date(); $('#today').textContent=today.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();
 function display(n){return data.hide?'••••••':money(n)}
 function walletIcon(name){
@@ -27,4 +85,4 @@ $('#bills').innerHTML=data.bills.length?data.bills.map(b=>`<article class="card-
 $('#cards').innerHTML=data.cards.length?data.cards.map(c=>`<article class="card-item"><div><section><h3>${c.name}</h3><span>${c.detail||'Sin cuotas cargadas'}</span></section><strong>${display(c.debt)}</strong></div></article>`).join(''):'<p class="eyebrow">Sin tarjetas cargadas.</p>';
 const monthStart=new Date(today.getFullYear(),today.getMonth(),1);$('#monthSpent').textContent=display(spent(monthStart));$('#pendingBills').textContent=display(data.bills.filter(b=>!b.paid).reduce((a,b)=>a+Number(b.amount),0));$('#cardDebt').textContent=display(data.cards.reduce((a,c)=>a+Number(c.debt),0));const cat={};data.movements.filter(m=>m.type==='out'&&new Date(m.date+'T12:00')>=week).forEach(m=>cat[m.category||'Otros']=(cat[m.category||'Otros']||0)+Number(m.amount));const top=Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];$('#insightText').textContent=top?`Esta semana gastaste más en ${top[0]}: ${money(top[1])}.`:'Cuando registres movimientos, acá vas a ver en qué se fue tu plata.';save();}
 function openModal(kind,item){let title='',body='';if(kind==='movement'){title='Nuevo movimiento';body=`<label>Compra o ingreso<input name="name" required placeholder="Ej. Supermercado"></label><label>Monto<input name="amount" type="number" inputmode="decimal" required></label><label>Medio de pago<select name="wallet">${data.wallets.map(w=>`<option>${w.name}</option>`).join('')}</select></label><label>Tipo<select name="type"><option value="out">Gasto</option><option value="in">Ingreso</option></select></label><label>Categoría<input name="category" placeholder="Ej. Comida"></label><label>Fecha<input name="date" type="date" value="${today.toISOString().slice(0,10)}"></label>`} if(kind==='wallet'){title=item?'Editar billetera':'Nueva billetera';body=`<label>Nombre<input name="name" required value="${item?.name||''}"></label><label>Saldo<input name="balance" type="number" inputmode="decimal" required value="${item?.balance||0}"></label>`} if(kind==='transfer'){title='Transferir dinero';body=`<label>Desde<select name="from">${data.wallets.map(w=>`<option>${w.name}</option>`).join('')}</select></label><label>Hacia<select name="to">${data.wallets.map(w=>`<option>${w.name}</option>`).join('')}</select></label><label>Monto<input name="amount" type="number" required></label>`} if(kind==='bill'){title='Nuevo pago mensual';body=`<label>Servicio<input name="name" required></label><label>Monto<input name="amount" type="number" required></label><label>Día de vencimiento<input name="day" type="number" min="1" max="31" required></label>`} if(kind==='card'){title='Nueva tarjeta';body=`<label>Nombre<input name="name" required placeholder="Ej. Santander"></label><label>Deuda actual<input name="debt" type="number" required></label><label>Detalle<input name="detail" placeholder="Ej. 3 cuotas pendientes"></label>`};$('#modalContent').innerHTML=`<h3 class="modal-title">${title}</h3><div class="fields">${body}</div><div class="modal-actions"><button class="cancel" value="cancel">Cancelar</button><button class="primary" value="default">Guardar</button></div>`;const form=$('#modalForm');form.onsubmit=e=>{e.preventDefault();const v=Object.fromEntries(new FormData(form));if(kind==='movement'){data.movements.push({...v,id:Date.now(),amount:+v.amount})}if(kind==='wallet'){if(item){Object.assign(item,{name:v.name,balance:+v.balance})}else data.wallets.push({id:Date.now(),name:v.name,balance:+v.balance,icon:v.name.slice(0,2).toUpperCase()})}if(kind==='transfer'){const a=data.wallets.find(w=>w.name===v.from),b=data.wallets.find(w=>w.name===v.to),n=+v.amount;if(a&&b&&a!==b&&n>0){a.balance-=n;b.balance+=n;data.movements.push({id:Date.now(),name:`Transferencia a ${b.name}`,amount:n,wallet:a.name,type:'out',category:'Transferencia',date:today.toISOString().slice(0,10)});data.movements.push({id:Date.now()+1,name:`Transferencia desde ${a.name}`,amount:n,wallet:b.name,type:'in',category:'Transferencia',date:today.toISOString().slice(0,10)})}}if(kind==='bill')data.bills.push({...v,id:Date.now(),amount:+v.amount,paid:false});if(kind==='card')data.cards.push({...v,id:Date.now(),debt:+v.debt});$('#modal').close();render()};$('#modal').showModal()}
-document.addEventListener('click',e=>{const nav=e.target.closest('[data-nav]');if(nav){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===nav.dataset.nav));document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n===nav));$('#title').textContent=nav.dataset.nav==='home'?'Hola, Rodri':nav.dataset.nav[0].toUpperCase()+nav.dataset.nav.slice(1);window.scrollTo({top:0,behavior:'smooth'})}if(e.target.id==='toggleCapital'){data.hide=!data.hide;render()}if(e.target.id==='newMovement')openModal('movement');if(e.target.dataset.action==='new-wallet')openModal('wallet');if(e.target.dataset.action==='transfer')openModal('transfer');if(e.target.dataset.action==='new-bill')openModal('bill');if(e.target.dataset.action==='new-card')openModal('card');const id=e.target.dataset.editWallet;if(id)openModal('wallet',data.wallets.find(w=>w.id===+id))});$('#movementSearch').addEventListener('input',render);render();
+document.addEventListener('click',e=>{const nav=e.target.closest('[data-nav]');if(nav){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===nav.dataset.nav));document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n===nav));$('#title').textContent=nav.dataset.nav==='home'?'Hola, Rodri':nav.dataset.nav[0].toUpperCase()+nav.dataset.nav.slice(1);window.scrollTo({top:0,behavior:'smooth'})}if(e.target.id==='toggleCapital'){data.hide=!data.hide;render()}if(e.target.id==='newMovement')openModal('movement');if(e.target.dataset.action==='new-wallet')openModal('wallet');if(e.target.dataset.action==='transfer')openModal('transfer');if(e.target.dataset.action==='new-bill')openModal('bill');if(e.target.dataset.action==='new-card')openModal('card');const id=e.target.dataset.editWallet;if(id)openModal('wallet',data.wallets.find(w=>w.id===+id))});$('#movementSearch').addEventListener('input',render);render();initGoogle();
