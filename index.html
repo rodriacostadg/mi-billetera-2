@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
   <link rel="stylesheet" href="icons.css?v=3" />
 </head>
 <body>
   <main class="app-shell">
-    <header class="topbar"><div><p class="eyebrow" id="today"></p><h1 id="title">Hola, Rodri</h1></div><button id="toggleCapital" class="icon-button" aria-label="Ocultar capital">◉</button></header>
+    <header class="topbar"><div><p class="eyebrow" id="today"></p><h1 id="title">Hola, Rodri</h1><p id="syncStatus" class="sync-status">Conectá Google para sincronizar</p></div><div class="top-actions"><div id="googleSignIn"></div><button id="toggleCapital" class="icon-button" aria-label="Ocultar capital">◉</button></div></header>
     <section id="home" class="view active">
       <div class="hero-card"><p>Capital total</p><strong id="capitalTotal">$ 0</strong><span id="capitalHint">Sumá tus saldos para empezar</span></div>
       <div class="section-head"><h2>Billeteras</h2><button class="text-button" data-action="new-wallet">+ Agregar</button></div>
@@ -33,6 +33,7 @@
   </main>
   <nav class="bottom-nav"><button class="nav active" data-nav="home">⌂<span>Home</span></button><button class="nav" data-nav="diario">◷<span>Diario</span></button><button class="nav" data-nav="mensual">□<span>Mensual</span></button><button class="nav" data-nav="tarjetas">▣<span>Tarjetas</span></button><button class="nav" data-nav="resumen">◔<span>Resumen</span></button></nav>
   <dialog id="modal"><form id="modalForm" method="dialog"><div id="modalContent"></div></form></dialog>
-  <script src="app.js?v=3"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
