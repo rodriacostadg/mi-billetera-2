@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#f6f7fb"><title>Mi Billetera 2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 <main class="app-shell">
@@ -17,11 +17,11 @@
     <div class="section-head"><h2>Actividad reciente</h2><button class="text-button" data-nav="diario">Ver todo</button></div><div id="recent" class="movement-list"></div>
   </section>
   <section id="diario" class="view">
-    <div class="view-head"><div><p class="eyebrow">REGISTRO Y ANÁLISIS</p><h2>Diario</h2></div><div><button class="secondary small" data-a="t">⇄</button><button class="primary small" data-a="m">+ Nuevo</button></div></div>
+    <div class="view-head"><div><p class="eyebrow">REGISTRO Y ANÁLISIS</p><h2>Movimientos</h2></div><div><button class="secondary small" data-a="t">⇄</button><button class="primary small" data-a="m">+ Nuevo</button></div></div>
     <div class="segmented"><button class="active" data-period="day">Diario</button><button data-period="week">Semanal</button></div>
     <div class="stats"><div><span id="periodLabel">Gasto del día</span><strong id="periodSpent">$ 0</strong></div><div><span>Balance semanal</span><strong id="weekBalance">$ 0</strong></div></div>
     <div class="chart-card"><div class="chart-head"><button aria-label="Período anterior" data-a="prev">‹</button><strong id="chartDate"></strong><button aria-label="Período siguiente" data-a="next">›</button></div><div id="spendChart" class="spend-chart"></div></div>
-    <div class="section-head"><h3>Movimientos</h3><input id="movementSearch" placeholder="Buscar" /></div><div id="movements" class="movement-list"></div>
+    <div class="section-head"><h3 id="movementTitle">Últimos movimientos</h3><input id="movementSearch" placeholder="Buscar" /></div><p id="movementMoment" class="movement-moment"></p><div id="movements" class="movement-list"></div><button id="moreMovements" class="text-button more-movements" data-a="more">Ver más</button>
   </section>
   <section id="mensual" class="view">
     <div class="view-head"><div><p class="eyebrow">SERVICIOS Y SUSCRIPCIONES</p><h2>Mensual</h2></div><button class="primary small" data-a="b">+ Nuevo</button></div>
@@ -38,7 +38,7 @@
     <div class="insight"><h3>Lectura rápida</h3><p id="insightText"></p></div>
   </section>
 </main>
-<nav class="bottom-nav"><button class="nav active" data-nav="home">⌂<span>Home</span></button><button class="nav" data-nav="diario">◷<span>Diario</span></button><button class="nav" data-nav="mensual">□<span>Mensual</span></button><button class="nav" data-nav="tarjetas">▣<span>Tarjetas</span></button><button class="nav" data-nav="resumen">◔<span>Resumen</span></button></nav>
+<nav class="bottom-nav"><button class="nav active" data-nav="home">⌂<span>Home</span></button><button class="nav" data-nav="diario">◷<span>Movimientos</span></button><button class="nav" data-nav="mensual">□<span>Mensual</span></button><button class="nav" data-nav="tarjetas">▣<span>Tarjetas</span></button><button class="nav" data-nav="resumen">◔<span>Resumen</span></button></nav>
 <dialog id="modal"><form id="modalForm"><div id="modalContent"></div></form></dialog>
-<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=10"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=11"></script>
 </body></html>
