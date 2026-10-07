@@ -3,7 +3,7 @@ const CLOUD_URL='https://mi-billetera-2-sync.rodriacostadg.workers.dev/state';
 const GOOGLE_CLIENT_ID='264539287566-sm1gq6j2e09vjejogrrpjopdcrd7atem.apps.googleusercontent.com';
 const USD_WALLETS=new Set(['ARQ','Dólares']);
 const defaults={hide:false,wallets:[{id:1,name:'Efectivo',balance:0,icon:'$'},{id:2,name:'Mercado Pago',balance:0,icon:'MP'},{id:3,name:'Naranja X',balance:0,icon:'NX'},{id:4,name:'Cocos TNA',balance:0,icon:'CT'},{id:5,name:'Cocos Pesos Plus',balance:0,icon:'CP'},{id:6,name:'Personal Pay',balance:0,icon:'PP'},{id:7,name:'Banco de Corrientes',balance:0,icon:'BC'},{id:8,name:'ARQ',balance:0,icon:'AR'},{id:9,name:'Dólares',balance:0,icon:'US'}],movements:[],bills:[],cards:[]};
-function cardDebt(card){return Array.isArray(card.charges)&&card.charges.length?card.charges.filter(c=>!c.cancelled).reduce((sum,c)=>sum+Number(c.currentAmount??c.amount??0),0):Number(card.debt)||0}
+function cardDebt(card){const recorded=Number(card.debt);return Number.isFinite(recorded)&&recorded>0?recorded:(Array.isArray(card.charges)?card.charges.filter(c=>!c.cancelled).reduce((sum,c)=>sum+Number(c.currentAmount??c.amount??0),0):0)}
 function normalizeState(value){const state=value&&typeof value==='object'?value:{};return {...defaults,...state,wallets:Array.isArray(state.wallets)?state.wallets:defaults.wallets,movements:Array.isArray(state.movements)?state.movements:[],bills:Array.isArray(state.bills)?state.bills:[],cards:Array.isArray(state.cards)?state.cards:[]}}
 let data=normalizeState(JSON.parse(localStorage.getItem(KEY)||'null'));
 let googleToken='';
