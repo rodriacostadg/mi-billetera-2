@@ -6,3 +6,6 @@ compatibility_date = "2026-10-06"
 binding = "DB"
 database_name = "mi-billetera-2"
 database_id = "5fd55c6e-c1c4-453b-8e51-c1f06bb05fc2"
+
+[triggers]
+crons = ["0 9 * * *"]
