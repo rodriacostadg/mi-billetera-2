@@ -14,3 +14,17 @@
 
 /* Gestos y estados planos en Mensuales */
 html,body{overflow-x:hidden;overscroll-behavior-x:none}#mensual,#bills,.bill-item{touch-action:pan-y;overscroll-behavior-x:none}.status{appearance:none!important;-webkit-appearance:none!important;border:0!important;box-shadow:none!important;filter:none!important;background-image:none!important;outline:none!important;text-shadow:none!important}.status:active{transform:none!important;filter:brightness(.96)!important}
+
+
+/* Márgenes seguros de Mensuales en iPhone */
+@media(max-width:480px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .app-shell{width:100%;max-width:100vw;overflow-x:hidden;padding-left:15px;padding-right:15px}
+  #mensual,.card-list,.bill-item{width:100%;max-width:100%;min-width:0}
+  .monthly-tools{display:grid;grid-template-columns:minmax(0,1fr);width:100%;min-width:0;gap:8px}
+  .month-switcher{width:100%;min-width:0;justify-content:space-between}
+  .bill-filters{width:100%;min-width:0;grid-template-columns:minmax(0,1fr) 110px;gap:7px}
+  .bill-filters input,.bill-filters select{min-width:0;max-width:100%}
+  .bill-item>div{width:100%;min-width:0;max-width:100%}
+  .bill-item section,.bill-item .bill-meta{min-width:0}
+}
