@@ -32,11 +32,12 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}#mensual,#bills,.bill-ite
 
 /* Avisos, navegación y señales de movimientos */
 .notification-button{position:relative;display:inline-flex;align-items:center;gap:6px}
+.category-card{margin:0 0 25px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:24px}.category-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}.category-card h3{font-size:19px}.category-card-head span{display:block;margin-top:5px;color:var(--muted);font-size:12px}.category-list{display:grid;gap:8px}.category-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:14px;background:#edf6f0}.category-row span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:700;color:var(--ink)}.category-row strong{white-space:nowrap;color:var(--p);font-size:15px}.category-card .empty{padding:2px 0;margin:0;font-size:13px}
 .notification-badge{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:#d73340;border:2px solid var(--card)}
 .notice-list{display:grid;gap:9px;max-height:55vh;overflow:auto;padding-right:2px}
 .notice-item{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-size:13px;line-height:1.45}
 .notice-item>b{font-size:16px;line-height:1}.notice-item.today{border-color:#df9d37}.notice-item.overdue{border-color:#d64d59}.notice-item.paid{border-color:#2d9660}
 .movement.in>b{background:#e3f4e9;color:#16874f}.movement.in>strong{color:#16874f}.movement.out>b{background:#fde9eb;color:#ce3f4b}.movement.out>strong{color:#ce3f4b}
 .nav-icon{width:34px;height:34px}
-@media(prefers-color-scheme:dark){.notification-badge{border-color:#2a302d}.notice-item{background:#252c28}.movement.in>b{background:#1d4731;color:#70e4a0}.movement.in>strong{color:#70e4a0}.movement.out>b{background:#4a292d;color:#ff8790}.movement.out>strong{color:#ff8790}}
+@media(prefers-color-scheme:dark){.notification-badge{border-color:#2a302d}.notice-item{background:#252c28}.category-row{background:#213c2f}.category-row strong{color:#8ee7b8}.movement.in>b{background:#1d4731;color:#70e4a0}.movement.in>strong{color:#70e4a0}.movement.out>b{background:#4a292d;color:#ff8790}.movement.out>strong{color:#ff8790}}
 @media(max-width:480px){.nav-icon{width:33px;height:33px}.notification-label{display:none}.notification-button{width:42px;justify-content:center;padding:10px}.notification-badge{right:1px;top:1px}}
