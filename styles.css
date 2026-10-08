@@ -12,3 +12,5 @@ body{overflow-x:hidden}.app-shell{width:min(100%,680px)}.card-item>.card-details
 .monthly-head-actions{display:flex;gap:8px;align-items:center}.status.paid{background:#237b4d;color:#fff}.status.overdue{background:#b93b3b;color:#fff}.status.pending{background:#355373;color:#fff}@media(prefers-color-scheme:dark){.status.paid{background:#2a9c61;color:#fff}.status.overdue{background:#cf4b4b;color:#fff}.status.pending{background:#476b90;color:#fff}}
 
 .status.today{background:#d58218;color:#fff}@media(prefers-color-scheme:dark){.status.today{background:#e39a2d;color:#151b18}}
+
+.bill-item .bill-meta{display:grid;justify-items:end;gap:7px;flex:none}.bill-item .bill-meta strong{font-size:23px;line-height:1.1;white-space:nowrap}.bill-item .bill-meta .status{margin:0}.bill-item footer{display:none}@media(max-width:480px){.bill-item .bill-meta strong{font-size:21px}.bill-item>div{gap:10px}}
