@@ -14,3 +14,5 @@ body{overflow-x:hidden}.app-shell{width:min(100%,680px)}.card-item>.card-details
 .status.today{background:#d58218;color:#fff}@media(prefers-color-scheme:dark){.status.today{background:#e39a2d;color:#151b18}}
 
 .bill-item .bill-meta{display:grid;justify-items:end;gap:7px;flex:none}.bill-item .bill-meta strong{font-size:23px;line-height:1.1;white-space:nowrap}.bill-item .bill-meta .status{margin:0}.bill-item footer{display:none}@media(max-width:480px){.bill-item .bill-meta strong{font-size:21px}.bill-item>div{gap:10px}}
+
+.bill-item .entity-icon{width:50px;height:50px;border-radius:15px}.bill-item section span{font-size:13px;line-height:1.25}
