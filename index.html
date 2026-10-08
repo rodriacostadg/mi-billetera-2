@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#0b5d3b"><title>Mi Billetera 2</title>
   <link rel="icon" href="assets/app-icons/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/app-icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=26">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 <main class="app-shell">
@@ -18,5 +18,5 @@
 </main>
 <nav class="bottom-nav" aria-label="Navegación principal"><button class="nav active" data-nav="home" aria-label="Inicio"><img class="nav-icon" src="assets/modules/HOME.svg" alt=""></button><button class="nav" data-nav="diario" aria-label="Movimientos"><img class="nav-icon" src="assets/modules/MOVIMIENTOS.svg" alt=""></button><button class="nav" data-nav="mensual" aria-label="Mensual"><img class="nav-icon" src="assets/modules/MENSUALES.svg" alt=""></button><button class="nav" data-nav="tarjetas" aria-label="Tarjetas"><img class="nav-icon" src="assets/modules/TARJETAS.svg" alt=""></button><button class="nav" data-nav="resumen" aria-label="Resumen"><img class="nav-icon" src="assets/modules/RESUMEN.svg" alt=""></button></nav>
 <dialog id="modal"><form id="modalForm"><div id="modalContent"></div></form></dialog>
-<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=36"></script><script>document.addEventListener('click',e=>{let row=e.target.closest('.wallet,.movement,.bill-item');if(!row||e.target.closest('button'))return;let id=row.classList.contains('bill-item')?row.dataset.billId:row.querySelector('[data-id]')?.dataset.id,byId=x=>String(x.id)===String(id);if(row.classList.contains('wallet'))modal('w',d.wallets.find(byId));if(row.classList.contains('movement'))modal('m',d.movements.find(byId));if(row.classList.contains('bill-item'))modal('b',d.bills.find(byId))})</script>
+<script src="https://accounts.google.com/gsi/client" async defer></script><script src="app.js?v=37"></script><script>document.addEventListener('click',e=>{let row=e.target.closest('.wallet,.movement,.bill-item');if(!row||e.target.closest('button'))return;let id=row.classList.contains('bill-item')?row.dataset.billId:row.querySelector('[data-id]')?.dataset.id,byId=x=>String(x.id)===String(id);if(row.classList.contains('wallet'))modal('w',d.wallets.find(byId));if(row.classList.contains('movement'))modal('m',d.movements.find(byId));if(row.classList.contains('bill-item'))modal('b',d.bills.find(byId))})</script>
 </body></html>
