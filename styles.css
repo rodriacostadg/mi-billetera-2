@@ -54,3 +54,6 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}#mensual,#bills,.bill-ite
   .nav-icon{filter:invert(87%) sepia(10%) saturate(412%) hue-rotate(99deg) brightness(91%) contrast(88%)}.nav.active .nav-icon{filter:invert(69%) sepia(30%) saturate(697%) hue-rotate(100deg) brightness(96%) contrast(90%)}
   .icon-button{background:#252c28;color:var(--ink);border-color:var(--line)}.wallet button,.movement button{background:#213c2f;color:#8ee7b8}
 }
+
+/* Íconos de los pagos mensuales: aprovechan todo el espacio del contenedor. */
+.bill-item .entity-icon .brand-image{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;transform:scale(1.16);transform-origin:center}
