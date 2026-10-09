@@ -63,3 +63,6 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}#mensual,#bills,.bill-ite
 
 /* Acciones del editor mensual: misma jerarquía y tamaño en todos los botones. */
 .bill-save-actions{margin-top:20px!important}.modal-actions button,.bill-actions button{min-height:44px;border-radius:14px;font:700 13px Comfortaa,system-ui,sans-serif;cursor:pointer}.bill-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px;padding-top:15px;border-top:1px solid var(--line)}.bill-actions button{border:1px solid var(--line);padding:10px 9px;background:var(--card);color:var(--ink);line-height:1.2}.bill-actions .paid-action{grid-column:1/-1;border-color:#237b4d;background:#237b4d;color:#fff}.bill-actions .danger{color:#b93b3b;border-color:#e8c1c1;background:#fff8f8}.modal-actions .primary{min-height:44px}.modal-actions .cancel{min-height:44px;border-radius:14px;padding:10px 13px}@media(prefers-color-scheme:dark){.bill-actions button{background:#242a27;border-color:var(--line);color:var(--ink)}.bill-actions .paid-action{background:#2a9c61;border-color:#2a9c61;color:#fff}.bill-actions .danger{background:#372629;border-color:#75454b;color:#ff9aa2}}
+
+/* Barra de módulos un poco más baja, respetando el área segura del iPhone. */
+.bottom-nav{bottom:max(4px,calc(env(safe-area-inset-bottom) - 12px))}
