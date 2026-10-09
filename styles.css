@@ -59,4 +59,4 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}#mensual,#bills,.bill-ite
 .bill-item .entity-icon .brand-image{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;transform:scale(1.16);transform-origin:center}
 
 /* Mismo encaje a borde para los logos del módulo Tarjetas. */
-.credit-card .entity-icon .brand-image{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;transform:scale(1.16);transform-origin:center}
+.credit-card .entity-icon .brand-image{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;transform:scale(1.25)!important;transform-origin:center}
