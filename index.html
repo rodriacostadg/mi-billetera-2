@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#0b5d3b"><title>Mi Billetera 2</title>
   <link rel="icon" href="assets/app-icons/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/app-icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=38">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=39">
 </head>
 <body>
 <main class="app-shell">
@@ -30,5 +30,8 @@ setTimeout(()=>{const paymentWalletFor=item=>{const raw=String(item?.wallet||ite
 </script>
 <script>
 setTimeout(()=>{const ensureSantander=()=>{let santander=d.wallets.find(wallet=>wallet.name==='Santander'),bankIndex=d.wallets.findIndex(wallet=>wallet.name==='Banco de Corrientes'),changed=false;if(!santander){santander={id:'wallet-santander',name:'Santander',balance:0};d.wallets.push(santander);changed=true}let currentIndex=d.wallets.indexOf(santander);if(bankIndex>=0&&currentIndex!==bankIndex-1){d.wallets.splice(currentIndex,1);bankIndex=d.wallets.findIndex(wallet=>wallet.name==='Banco de Corrientes');d.wallets.splice(bankIndex,0,santander);changed=true}if(changed)change(()=>{})};ensureSantander();setTimeout(ensureSantander,1500);setTimeout(ensureSantander,3500)},60);
+</script>
+<script>
+setTimeout(()=>{const baseHome=home;home=()=>{d.hide=false;if(typeof d.hideCapital!=='boolean')d.hideCapital=true;baseHome();const total=d.wallets.reduce((sum,wallet)=>sum+(+wallet.balance||0)*(USD.has(wallet.name)?rate:1),0),button=$('#toggleCapital');$('#capitalTotal').textContent=d.hideCapital?'••••••':money(total);$('#capitalHint').textContent=d.hideCapital?'Capital oculto':'Incluye dólares al oficial: '+F(rate);button.innerHTML=eye(d.hideCapital);button.setAttribute('aria-label',d.hideCapital?'Mostrar capital total':'Ocultar capital total')};const migratePrivacy=()=>{if(d.hide===false&&typeof d.hideCapital==='boolean')return;change(()=>{d.hide=false;if(typeof d.hideCapital!=='boolean')d.hideCapital=true})};migratePrivacy();setTimeout(migratePrivacy,1500);setTimeout(migratePrivacy,3500);$('#toggleCapital').onclick=()=>change(()=>d.hideCapital=!d.hideCapital);render()},80);
 </script>
 </body></html>
